@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Planner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --secondary: #6366f1;
+            --background: #f3f4f6;
+            --text: #1f2937;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-image: url('greenery (1).jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px 25px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+        }
+
+        .website-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000400;
+            letter-spacing: 1px;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .top-menu {
+            display: flex;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #555;
+            margin-left: 25px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-item:hover {
+            color: #4CAF50;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #4CAF50;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .nav-item i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-success {
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+        }
+
+        .btn-outline-success:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-success {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #45a049;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e711a;
+        }
+
+        .diet-options {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .diet-option {
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .diet-option:hover, .diet-option.selected {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .diet-option img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 5px;
+        }
+
+        .input-section {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .meal-plan {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .meal {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .meal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .meal-item {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .meal-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .nutrition-info {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nutrition-info h2 {
+            margin-bottom: 15px;
+        }
+
+        #nutritionChart {
+            max-width: 300px;
+            max-height: 300px;
+        }
+
+        @media (max-width: 768px) {
+            .diet-options {
+                flex-direction: column;
+            }
+
+            .input-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="top-bar">
+        <div class="logo-container">
+            <span class="website-name">Health Quest</span>
+        </div>
+        <nav class="top-menu">
+<!--             <a href="mainpage.html" class="nav-item"><i class="bi bi-house"></i>MyMeal</a> -->
+             <a href="home.html" class="nav-item"><i class="bi bi-house"></i>Home</a>
+            <a href="#" class="nav-item"><i class="bi bi-calendar2-date"></i>Meal Plans</a>
+            <a href="calorietracketr.html" class="nav-item"><i class="bi bi-calculator"></i>Track Calories</a>
+            <a href="contactus.html" class="nav-item"><i class="bi bi-person-lines-fill"></i>Contact Us</a>
+        </nav>
+        <div class="user-profile">
+            <a href="index.html" class="btn btn-outline-success me-2"><i class="bi bi-box-arrow-in-right me-1"></i>Login</a>
+            <a href="index.html" class="btn btn-success">Sign Up</a>
+        </div>
+    </header>
+    <div class="container">
+        <h1>Meal Planner</h1>
+        
+        <div class="diet-options" role="radiogroup" aria-label="Diet options">
+            <div class="diet-option selected" data-diet="anything" role="radio" aria-checked="true" tabindex="0">
+                <img src="anything.png" alt="Anything icon">
+                <p>Anything</p>
+            </div>
+            <div class="diet-option" data-diet="paleo" role="radio" aria-checked="false" tabindex="0">
+                <img src="paleo.png" alt="Paleo icon">
+                <p>Paleo</p>
+            </div>
+            <div class="diet-option" data-diet="vegetarian" role="radio" aria-checked="false" tabindex="0">
+                <img src="veg.png" alt="Vegetarian icon">
+                <p>Vegetarian</p>
+            </div>
+            <div class="diet-option" data-diet="vegan" role="radio" aria-checked="false" tabindex="0">
+                <img src="vegan.png" alt="Vegan icon">
+                <p>Vegan</p>
+            </div>
+            <div class="diet-option" data-diet="ketogenic" role="radio" aria-checked="false" tabindex="0">
+                <img src="keto.png" alt="Ketogenic icon">
+                <p>Ketogenic</p>
+            </div>
+            <div class="diet-option" data-diet="mediterranean" role="radio" aria-checked="false" tabindex="0">
+                <img src="mederrenean.jpg" alt="Mediterranean icon">
+                <p>Mediterranean</p>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <label for="calories">Daily Calorie Goal:</label>
+                <input type="number" id="calories" value="2000" min="1000" max="5000">
+            </div>
+            <div class="input-group">
+                <label for="meals">Number of Meals:</label>
+                <select id="meals">
+                    <option value="3">3 meals</option>
+                    <option value="4" selected>4 meals</option>
+                    <option value="5">5 meals</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <button id="generate">Generate Meal Plan</button>
+            </div>
+        </div>
+
+        <div class="nutrition-info">
+            <h2>Nutrition Breakdown</h2>
+            <div style="width: 300px; height: 300px;">
+            <canvas id="nutritionChart"></canvas>
+            </div>
+        </div>
+
+        <div id="meal-plan" class="meal-plan"></div>
+    </div>
+
+    <script>
+         const foodDatabase = {
+      anything: [
+          { name: "Chicken Breast", calories: 165, protein: 31, fat: 3.6, carbs: 0, image: "https://img.freepik.com/free-photo/chicken-breast-with-fresh-salad-arugula-tomato_2829-13986.jpg?t=st=1728626510~exp=1728630110~hmac=f910e94aea19b5f864c85a2b7c2e9fdfa0c82a8721f8e2c2ec8ad513212dbbc5&w=360" },
+          { name: "Brown Rice", calories: 216, protein: 5, fat: 1.8, carbs: 45, image: "https://img.freepik.com/free-photo/indian-traditional-dish-with-rice-lemon-tomato-coriander-leaf-cutlery-wooden-tray_613910-21740.jpg?t=st=1728626743~exp=1728630343~hmac=66b1161ff2861d38b0154d3cadf01c3c7c4b09ee6cfbe1b57882a57cec52d121&w=900" },
+          { name: "Broccoli", calories: 55, protein: 3.7, fat: 0.6, carbs: 11.2, image: "https://img.freepik.com/free-photo/half-shot-healthy-meal-with-brocoli-carrots-black-plate-gray-table_140725-86728.jpg?t=st=1728626816~exp=1728630416~hmac=a0b09afff5e2997237945aba089c087f64883e08be9017cac30e1b3b65f43b31&w=900" },
+          { name: "Salmon", calories: 208, protein: 20, fat: 13, carbs: 0, image: "https://img.freepik.com/free-photo/slice-grilled-salmon_144627-11115.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Sweet Potato", calories: 180, protein: 2, fat: 0.1, carbs: 41.4, image: "https://img.freepik.com/free-photo/african-man-harvesting-vegetables_23-2151441241.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Greek Yogurt", calories: 100, protein: 18, fat: 0.7, carbs: 6, image: "https://img.freepik.com/free-photo/yogurt-with-mixed-berries_1339-7905.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Almonds", calories: 164, protein: 6, fat: 14, carbs: 6, image: "https://img.freepik.com/free-photo/peeled-almonds-wooden-bowl-dark-table_176474-5495.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Banana", calories: 105, protein: 1.3, fat: 0.4, carbs: 27, image: "https://img.freepik.com/free-photo/still-life-recipe-with-plantain-banana_23-2151023940.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Eggs", calories: 78, protein: 6, fat: 5, carbs: 0.6, image: "https://img.freepik.com/free-photo/top-view-pan-with-fried-eggs_23-2148601059.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Spinach", calories: 23, protein: 2.9, fat: 0.4, carbs: 3.6, image: "https://img.freepik.com/free-photo/bowl-avocado-salad-with-cucumber-spinach-lettuce-with-sauce-top_140725-2602.jpg?semt=ais_hybrid-rr-similar" }
+      ],
+      paleo: [
+          { name: "Grilled Chicken", calories: 165, protein: 31, fat: 3.6, carbs: 0, image: "https://img.freepik.com/free-photo/grilled-chicken-breasts-with-vegetables_23-2148189864.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Sweet Potato", calories: 180, protein: 2, fat: 0.1, carbs: 41.4, image: "https://img.freepik.com/free-photo/african-man-harvesting-vegetables_23-2151441241.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Avocado", calories: 320, protein: 4, fat: 29, carbs: 17, image: "https://img.freepik.com/free-photo/high-angle-avocado-toast-plate-with-cutlery-coffee_23-2148891764.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Almonds", calories: 164, protein: 6, fat: 14, carbs: 6, image: "https://img.freepik.com/free-photo/peeled-almonds-wooden-bowl-dark-table_176474-5495.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Salmon", calories: 208, protein: 20, fat: 13, carbs: 0, image: "https://img.freepik.com/free-photo/slice-grilled-salmon_144627-11115.jpg?semt=ais_hybrid-rr-similar" }
+      ],
+      vegetarian: [
+          { name: "Greek Yogurt", calories: 100, protein: 18, fat: 0.7, carbs: 6, image: "https://img.freepik.com/free-photo/yogurt-with-mixed-berries_1339-7905.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Quinoa", calories: 222, protein: 8, fat: 3.6, carbs: 39, image: "https://img.freepik.com/free-photo/quinoa-salad-tomato-cucumber-basil-parsley-side-view_141793-3183.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Lentils", calories: 230, protein: 18, fat: 0.8, carbs: 40, image: "https://img.freepik.com/free-photo/legumes-beans-assortment-black-cement-floor_1150-19902.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Tofu", calories: 144, protein: 17, fat: 8.7, carbs: 2.4, image: "https://img.freepik.com/free-photo/fried-tofu_1339-3263.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Spinach", calories: 23, protein: 2.9, fat: 0.4, carbs: 3.6, image: "https://img.freepik.com/free-photo/bowl-avocado-salad-with-cucumber-spinach-lettuce-with-sauce-top_140725-2602.jpg?semt=ais_hybrid-rr-similar" }
+      ],
+      vegan: [
+          { name: "Tofu", calories: 144, protein: 17, fat: 8.7, carbs: 2.4, image: "https://img.freepik.com/free-photo/fried-tofu_1339-3263.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Quinoa", calories: 222, protein: 8, fat: 3.6, carbs: 39, image: "https://img.freepik.com/free-photo/quinoa-salad-tomato-cucumber-basil-parsley-side-view_141793-3183.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Lentils", calories: 230, protein: 18, fat: 0.8, carbs: 40, image: "https://img.freepik.com/free-photo/legumes-beans-assortment-black-cement-floor_1150-19902.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Chickpeas", calories: 269, protein: 14.5, fat: 4.3, carbs: 45, image: "https://img.freepik.com/free-photo/top-view-boiled-chickpeas-bamboo-bowl_140725-8862.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Spinach", calories: 23, protein: 2.9, fat: 0.4, carbs: 3.6, image: "https://img.freepik.com/free-photo/bowl-avocado-salad-with-cucumber-spinach-lettuce-with-sauce-top_140725-2602.jpg?semt=ais_hybrid-rr-similar" }
+      ],
+      ketogenic: [
+          { name: "Avocado", calories: 320, protein: 4, fat: 29, carbs: 17, image: "https://img.freepik.com/free-photo/high-angle-avocado-toast-plate-with-cutlery-coffee_23-2148891764.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Bacon", calories: 541, protein: 37, fat: 42, carbs: 1.4, image: "https://img.freepik.com/free-photo/delicious-grilled-bacon_144627-43438.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Eggs", calories: 78, protein: 6, fat: 5, carbs: 0.6, image: "https://img.freepik.com/free-photo/top-view-pan-with-fried-eggs_23-2148601059.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Salmon", calories: 208, protein: 20, fat: 13, carbs: 0, image: "https://img.freepik.com/free-photo/slice-grilled-salmon_144627-11115.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Spinach", calories: 23, protein: 2.9, fat: 0.4, carbs: 3.6, image: "https://img.freepik.com/free-photo/bowl-avocado-salad-with-cucumber-spinach-lettuce-with-sauce-top_140725-2602.jpg?semt=ais_hybrid-rr-similar" }
+      ],
+      mediterranean: [
+          { name: "Olive Oil", calories: 119, protein: 0, fat: 13.5, carbs: 0, image: "https://img.freepik.com/free-photo/olive-oil-olive-branch-wooden-table_155003-8861.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Feta Cheese", calories: 264, protein: 14, fat: 21, carbs: 4, image: "https://img.freepik.com/free-photo/feta-cheese-cherry-tomatoes-rucola-table-ingredients-salad_2829-4399.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Whole Grain Bread", calories: 247, protein: 13, fat: 3.5, carbs: 41, image: "https://img.freepik.com/free-photo/candied-fruits-nuts-near-bread-buns_23-2147851983.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Tomatoes", calories: 18, protein: 0.9, fat: 0.2, carbs: 3.9, image: "https://img.freepik.com/free-photo/top-view-fresh-tomatoes-tray_23-2149707902.jpg?semt=ais_hybrid-rr-similar" },
+          { name: "Greek Yogurt", calories: 100, protein: 18, fat: 0.7, carbs: 6, image: "https://img.freepik.com/free-photo/yogurt-with-mixed-berries_1339-7905.jpg?semt=ais_hybrid-rr-similar" }
+      ]
+  };
+  let selectedDiet = 'anything';
+  let nutritionChart;
+
+  function generateMealPlan() {
+      const totalCalories = parseInt(document.getElementById('calories').value);
+      const numberOfMeals = parseInt(document.getElementById('meals').value);
+      const caloriesPerMeal = Math.floor(totalCalories / numberOfMeals);
+
+      const mealPlan = [];
+      let remainingCalories = totalCalories;
+
+      for (let i = 0; i < numberOfMeals; i++) {
+          const meal = {
+              name: i === 0 ? "Breakfast" : i === numberOfMeals - 1 ? "Dinner" : `Meal ${i + 1}`,
+              items: [],
+              calories: 0,
+              protein: 0,
+              fat: 0,
+              carbs: 0
+          };
+
+          while (meal.calories < caloriesPerMeal && remainingCalories > 0) {
+              const randomFood = foodDatabase[selectedDiet][Math.floor(Math.random() * foodDatabase[selectedDiet].length)];
+              const servings = Math.min(Math.ceil((caloriesPerMeal - meal.calories) / randomFood.calories), 2);
+
+              meal.items.push({ ...randomFood, servings });
+              meal.calories += randomFood.calories * servings;
+              meal.protein += randomFood.protein * servings;
+              meal.fat += randomFood.fat * servings;
+              meal.carbs += randomFood.carbs * servings;
+              remainingCalories -= randomFood.calories * servings;
+          }
+
+          mealPlan.push(meal);
+      }
+
+      displayMealPlan(mealPlan);
+  }
+
+  function displayMealPlan(mealPlan) {
+      const mealPlanContainer = document.getElementById('meal-plan');
+      mealPlanContainer.innerHTML = '';
+
+      let totalProtein = 0, totalFat = 0, totalCarbs = 0;
+
+      mealPlan.forEach(meal => {
+          const mealElement = document.createElement('div');
+          mealElement.className = 'meal';
+          mealElement.innerHTML = `
+              <div class="meal-header">
+                  <h2>${meal.name}</h2>
+                  <p>${Math.round(meal.calories)} Calories</p>
+              </div>
+          `;
+
+          meal.items.forEach(item => {
+              const itemElement = document.createElement('div');
+              itemElement.className = 'meal-item';
+              itemElement.innerHTML = `
+                  <img src="${item.image}" alt="${item.name}">
+                  <p>${item.name} - ${item.servings} serving(s)</p>
+              `;
+              mealElement.appendChild(itemElement);
+          });
+
+          mealPlanContainer.appendChild(mealElement);
+
+          totalProtein += meal.protein;
+          totalFat += meal.fat;
+          totalCarbs += meal.carbs;
+      });
+
+      updateNutritionChart(totalProtein, totalFat, totalCarbs);
+  }
+
+  function updateNutritionChart(protein, fat, carbs) {
+      const ctx = document.getElementById('nutritionChart').getContext('2d');
+      
+      if (nutritionChart) {
+          nutritionChart.destroy();
+      }
+
+      nutritionChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+              labels: ['Protein', 'Carbs', 'Fat'],
+              datasets: [{
+                  data: [protein, carbs, fat],
+                  backgroundColor: ['#FDE68A', '#4ADE80', '#34D399']
+              }]
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  legend: {
+                      position: 'bottom'
+                  }
+              }
+          }
+      });
+  }
+
+  document.getElementById('generate').addEventListener('click', generateMealPlan);
+
+  document.querySelectorAll('.diet-option').forEach(option => {
+      option.addEventListener('click', (e) => {
+          document.querySelectorAll('.diet-option').forEach(opt => {
+              opt.classList.remove('selected');
+              opt.setAttribute('aria-checked', 'false');
+          });
+          e.currentTarget.classList.add('selected');
+          e.currentTarget.setAttribute('aria-checked', 'true');
+          selectedDiet = e.currentTarget.dataset.diet;
+      });
+
+      option.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              option.click();
+          }
+      });
+  });
+
+  // Initialize the page
+  generateMealPlan();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

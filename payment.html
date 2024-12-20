@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Quest - Payment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            background-image: url(greenery.jpg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .payment-info {
+            margin-bottom: 1.5rem;
+        }
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .payment-method {
+            text-align: center;
+            cursor: pointer;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .payment-method:hover {
+            border-color: #4CAF50;
+        }
+        .payment-method.selected {
+            border-color: #4CAF50;
+            background-color: #e8f5e9;
+        }
+        .payment-method i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        #payButton {
+            background-color: #4CAF50;
+            border: none;
+        }
+        #payButton:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Complete Your Subscription</h1>
+        <div class="payment-info">
+            <h2>Selected Plan: <span id="selectedPlan"></span></h2>
+            <h3>Monthly Fee: ₹<span id="monthlyFee"></span></h3>
+            <h3>Subscription Duration: <span id="subscriptionDuration"></span> month(s)</h3>
+            <h3>Total Price: ₹<span id="totalPrice"></span></h3>
+        </div>
+        <h4>Choose a Payment Method:</h4>
+        <div class="payment-methods">
+            <div class="payment-method" onclick="selectPaymentMethod('credit-card')">
+                <i class="bi bi-credit-card"></i>
+                <p>Credit Card</p>
+            </div>
+            <div class="payment-method" onclick="selectPaymentMethod('paypal')">
+                <i class="bi bi-paypal"></i>
+                <p>PayPal</p>
+            </div>
+            <div class="payment-method" onclick="selectPaymentMethod('bank-transfer')">
+                <i class="bi bi-bank"></i>
+                <p>Bank Transfer</p>
+            </div>
+        </div>
+        <button id="payButton" class="btn btn-success btn-lg w-100" disabled>Pay Now</button>
+    </div>
+
+    <script>
+        // Retrieve the selected plan, price, duration, and total price from localStorage
+        const selectedPlan = localStorage.getItem('selectedPlan');
+        const selectedPrice = localStorage.getItem('selectedPrice');
+        const selectedDuration = localStorage.getItem('selectedDuration');
+        const totalPrice = localStorage.getItem('totalPrice');
+
+        // Update the payment information on the page
+        document.getElementById('selectedPlan').textContent = selectedPlan;
+        document.getElementById('monthlyFee').textContent = selectedPrice;
+        document.getElementById('subscriptionDuration').textContent = selectedDuration;
+        document.getElementById('totalPrice').textContent = totalPrice;
+
+        let selectedMethod = null;
+
+        function selectPaymentMethod(method) {
+            // Remove 'selected' class from all payment methods
+            document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
+            
+            // Add 'selected' class to the clicked payment method
+            event.currentTarget.classList.add('selected');
+            
+            selectedMethod = method;
+            document.getElementById('payButton').disabled = false;
+        }
+
+        document.getElementById('payButton').addEventListener('click', function() {
+            if (selectedMethod) {
+                alert(`Processing payment of $${totalPrice} for ${selectedPlan} plan (${selectedDuration} month(s)) using ${selectedMethod}. Thank you for your subscription!`);
+                // Here you would typically integrate with a real payment gateway
+                window.location.href = 'home.html'; // Redirect back to the main page after payment
+            }
+        });
+    </script>
+</body>
+</html>

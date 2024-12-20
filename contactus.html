@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Our Dietitians - HealthyEats</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #45a049;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6; 
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            background-image: url('greenery.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .container { 
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background-color: rgba(76, 175, 80, 0.9);
+            color: white;
+            text-align: center; 
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        nav {
+            display: flex; 
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        .logo {
+            font-size: 24px; 
+            font-weight: bold;
+            color: white; 
+            text-decoration: none;
+        }
+        nav ul {
+            display: flex;
+            list-style-type: none;
+        }
+        nav ul li { 
+            margin-left: 20px;
+        }
+        nav ul li a {
+            color: white; 
+            text-decoration: none; 
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover, nav ul li a.active {
+            color: #e0e0e0; 
+        }
+        h1 { 
+            font-size: 2.5em; 
+            margin-bottom: 10px;
+        }
+        h2 { 
+            color: white;
+            margin-bottom: 20px; 
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        .contact-form h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .dietitians {
+            margin-bottom: 60px;
+        }
+        .dietitian-profiles {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .dietitian { 
+            background-color: var(--card-bg); 
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: calc(33.333% - 20px);
+        }
+        .dietitian:hover { 
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .dietitian img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%; 
+            margin-bottom: 20px; 
+            object-fit: cover;
+        }
+        .dietitian h3 {
+            margin-bottom: 10px;
+        }
+        .contact-form { 
+            background-color: var(--card-bg); 
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+            padding: 40px; 
+            margin-bottom: 60px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block; 
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 10px;
+            border: 1px solid #ddd; 
+            border-radius: 4px;
+            font-size: 16px; 
+            transition: border-color 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus { 
+            outline: none; 
+            border-color: var(--primary-color);
+        }
+        textarea { 
+            height: 150px; 
+            resize: vertical;
+        }
+        .btn { 
+            display: inline-block; 
+            background-color: var(--primary-color); 
+            color: white; 
+            border: none; 
+            padding: 12px 20px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            text-decoration: none; 
+            transition: background-color 0.3s ease; 
+        }
+        .btn:hover { 
+            background-color: var(--secondary-color); 
+        }
+        .btn-submit { 
+            width: 100%; 
+        }
+        footer { 
+            background-color: rgba(76, 175, 80, 0.9); 
+            color: white; 
+            padding: 20px 0; 
+            text-align: center; 
+        }
+        .social-links { 
+            margin-top: 10px; 
+        }
+        .social-links a { 
+            color: white; 
+            margin: 0 10px; 
+            text-decoration: none; 
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: #e0e0e0;
+        }
+        .testimonials {
+            margin-bottom: 60px;
+        }
+        .testimonial {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .testimonial-author {
+            font-weight: bold;
+            text-align: right;
+        }
+        @media (max-width: 768px) {
+            .dietitian { width: calc(50% - 15px); }
+            nav { flex-direction: column; }
+            nav ul { margin-top: 20px; }
+            nav ul li { margin: 0 10px; }
+        }
+        @media (max-width: 480px) {
+            .dietitian { width: 100%; }
+            header { padding: 40px 0; }
+            h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+               
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="Mymeal.html">My Plans</a></li>
+                    <li><a href="calorietracketr.html">Calorie Tracker</a></li>
+                   
+                </ul>
+            </nav>
+            <h1>Contact Our Dieticians</h1>
+            <p>Get personalized nutrition advice from our expert team</p>
+        </header>
+        
+        <section class="dietitians">
+            <h2>Our Expert Dieticians</h2>
+            <div class="dietitian-profiles">
+                <div class="dietitian">
+                    <img src="Screenshot 2024-11-11 093442.png" alt="Dr. Divya">
+                    <h3>Dr.Divya</h3>
+                    <p>Specializes in weight management and diabetes</p>
+                    <a href="#" class="btn book-appointment">Book Appointment</a>
+                </div>
+                <div class="dietitian">
+                    <img src="dt-pooja-yadav.jpg" alt="Pooja">
+                    <h3>Pooja</h3>
+                    <p>Expert in sports nutrition and meal planning</p>
+                    <a href="#" class="btn book-appointment">Book Appointment</a>
+                </div>
+                <div class="dietitian">
+                    <img src="image.png" alt="Rahul">
+                    <h3>Rahul </h3>
+                    <p>Focuses on gut health and food allergies</p>
+                    <a href="#" class="btn book-appointment">Book Appointment</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <h2>What Our Clients Say</h2>
+            <div class="testimonial">
+                <p>"The personalized diet plan from Dr. Divya helped me lose 20 pounds in just 3 months!"</p>
+                <div class="testimonial-author">- Divya.</div>
+            </div>
+            <div class="testimonial">
+                <p>"Pooja's sports nutrition advice significantly improved my performance on the field."</p>
+                <div class="testimonial-author">- Pooja.</div>
+            </div>
+            <div class="testimonial">
+                <p>"Thanks to Rahul, I finally understood my food allergies and how to manage them effectively."</p>
+                <div class="testimonial-author">- Rahul.</div>
+            </div>
+        </section>
+
+        <section class="contact-form">
+            <h2>Get in Touch</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="dietitian">Preferred Dietitian:</label>
+                    <select id="dietitian" name="dietitian">
+                        <option value="">Choose a dietician</option>
+                        <option value="Divya">Dr. Divya</option>
+                        <option value="Pooja">Dr. Pooja Yadav</option>
+                        <option value="rahul">Dr.Rahul Arora</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="appointment-date">Preferred Appointment Date:</label>
+                    <input type="date" id="appointment-date" name="appointment-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Your Message:</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-submit">Send Message</button>
+            </form>
+        </section>
+    </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 HealthyEats. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="bi bi-instagram"></i></a>
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-twitter"></i></a>
+                <a href="#"><i class="bi bi-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation for the header
+            anime({
+                targets: 'header',
+                opacity: [0, 1],
+                translateY: ['-30px', '0'],
+                easing: 'easeOutQuad',
+                duration: 1000
+            });
+
+            // Animation for dietitian profiles
+            anime({
+                targets: '.dietitian',
+                opacity: [0, 1],
+                translateY: ['30px', '0'],
+                delay: anime.stagger(200),
+                easing: 'easeOutQuad',
+                duration: 800
+            });
+
+            // Animation for testimonials
+            anime({
+                targets: '.testimonial',
+                opacity: [0, 1],
+                translateX: ['-30px', '0'],
+                delay: anime.stagger(200),
+                easing: 'easeOutQuad',
+                duration: 800
+            });
+
+            // Animation for the contact form
+            anime({
+                targets: '.contact-form',
+                opacity: [0, 1],
+                translateX: ['30px', '0'],
+                easing: 'easeOutQuad',
+                duration: 800,
+                delay: 600
+            });
+
+            // Book Appointment button click handler
+            const bookButtons = document.querySelectorAll('.book-appointment');
+            bookButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector('.contact-form').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // Form submission handling
+            const form = document.getElementById('contactForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const dietitian = document.getElementById('dietitian').value;
+                const appointmentDate = document.getElementById('appointment-date').value;
+                const message = document.getElementById('message').value;
+
+                // Here you would typically send this data to a server
+                // For this example, we'll just log it to the console
+                console.log('Form submitted:', { name, email, phone,   dietitian, appointmentDate, message });
+
+                // Show a success message
+                showSuccessMessage();
+
+                // Reset the form
+                form.reset();
+            });
+
+            function showSuccessMessage() {
+                const successMessage = document.createElement('div');
+                successMessage.textContent = 'Thank you for your message! We will get back to you soon.';
+                successMessage.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                    z-index: 1000;
+                    opacity: 0;
+                `;
+                document.body.appendChild(successMessage);
+
+                anime({
+                    targets: successMessage,
+                    opacity: [0, 1],
+                    translateY: ['-20px', '0'],
+                    easing: 'easeOutQuad',
+                    duration: 300
+                });
+
+                setTimeout(() => {
+                    anime({
+                        targets: successMessage,
+                        opacity: 0,
+                        translateY: '-20px',
+                        easing: 'easeInQuad',
+                        duration: 300,
+                        complete: function() {
+                            document.body.removeChild(successMessage);
+                        }
+                    });
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

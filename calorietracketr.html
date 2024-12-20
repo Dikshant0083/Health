@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Health Quest - AI-Powered Meal Planner to plan and track your meals effectively.">
+    <title>Health Quest - AI-Powered Meal Planner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            height: 100%;
+            overflow-x: hidden;
+            background-image: url(greenery.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .background-image {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px 25px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .website-name {
+            
+             font-size: 24px;
+            font-weight: 700;
+            color: #000400;
+            letter-spacing: 1px;
+            margin-top:0px;
+            text-align: center;
+        }
+
+        .top-menu {
+            display: flex;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #555;
+            margin-left: 25px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-item:hover {
+            color: #4CAF50;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #4CAF50;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .nav-item i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-success {
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+        }
+
+        .btn-outline-success:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-success {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .calculate {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f0f0f0;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #28a745;
+            margin: 30px auto;
+            padding: 30px;
+            max-width: 500px;
+        }
+
+        .calculate h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2em;
+            color: #2C3E50;
+            margin-bottom: 20px;
+        }
+
+        .calculate .form-label {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .calculate input, .calculate select {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .calculate button {
+            background-color: #28a745;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .calculate button:hover {
+            background-color: #218838;
+        }
+
+
+        .calorie-output {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .calorie-output span {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #28a745;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .hero-section h1 {
+                font-size: 36px;
+            }
+
+            .hero-section p {
+                font-size: 18px;
+            }
+
+            .features {
+                flex-direction: column;
+            }
+
+            .feature {
+                margin: 10px 0;
+            }
+
+            .calculate {
+                max-width: 100%; /* Full width on smaller screens */
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section h1 {
+                font-size: 28px;
+            }
+
+            .hero-section p {
+                font-size: 16px;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section {
+            background-color: #4CAF50;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .hero-section h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero-section p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background-color: white;
+            color: #4CAF50;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .how-it-works {
+            background-color: rgb(255, 255, 255);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .step-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-right: 20px;
+        }
+
+        .testimonials {
+            text-align: center;
+            color: #333;
+        }
+
+        .testimonial {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .testimonial img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        
+    .calorie-tracker {
+        width: 500px;
+        height: auto;
+        padding: 40px;
+        background-color: #f5f5f5;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+        margin: 0 auto 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .calorie-tracker h2 {
+        color: #4CAF50;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+
+    .tracker-container {
+        margin-bottom: 30px;
+    }
+
+    .tracker-bar {
+        height: 30px;
+        background-color: #e0e0e0;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .tracker-fill {
+        height: 100%;
+        width: 0;
+        background-color: #4CAF50;
+        transition: width 0.5s ease-in-out;
+    }
+
+    .tracker-text {
+        text-align: center;
+        margin-top: 15px;
+        font-weight: bold;
+        color: #4CAF50;
+        font-size: 18px;
+    }
+
+    .input-container {
+        display: flex;
+        gap: 10px;
+    }
+
+    .input-container input {
+        flex-grow: 1;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .input-container button {
+        padding: 12px 24px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 16px;
+    }
+
+    .input-container button:hover {
+        background-color: #45a049;
+    }
+    </style>
+</head>
+<body>
+    <header class="top-bar">
+        <div class="logo-container">
+            <span class="website-name">Health Quest</span>
+        </div>
+        <nav class="top-menu">
+            <a href="home.html" class="nav-item"><i class="bi bi-house"></i>Home</a>
+            <a href="Mymeal.html" class="nav-item"><i class="bi bi-calendar2-date"></i>Meal Plans</a>
+            <a href="calorietracketr.html" class="nav-item"><i class="bi bi-calculator"></i>Track Calories</a>
+            <a href="contactus.html" class="nav-item"><i class="bi bi-person-lines-fill"></i>Contact Us</a>
+        </nav>
+        <div class="user-profile">
+            <a href="index.html" class="btn btn-outline-success me-2"><i class="bi bi-box-arrow-in-right me-1"></i>Login</a>
+            <a href="index.html" class="btn btn-success">Sign Up</a>
+        </div>
+    </header>
+    <div class="background-image">
+        <img src="greenery.jpg">
+    </div>
+    <div class="calculate">
+        <h2>Calorie Tracker</h2>
+        <form id="calorie-form">
+            <div class="mb-3">
+                <label for="age" class="form-label">Age</label>
+                <input type="number" class="form-control" id="age" min="15" max="80" value="25" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Gender</label>
+                <select class="form-select" id="gender">
+                    <option value="1.2" >Male</option>
+                    <option value="1.375">Female</option>
+                    <option value="1.375">Others</option>
+                 
+                </select>
+               
+            </div>
+            <div class="mb-3">
+                <label for="height" class="form-label">Height (cm)</label>
+                <input type="number" class="form-control" id="height" value="180" required>
+            </div>
+            <div class="mb-3">
+                <label for="weight" class="form-label">Weight (kg)</label>
+                <input type="number" class="form-control" id="weight" value="65" required>
+            </div>
+            <div class="mb-3">
+                <label for="activity" class="form-label">Activity Level</label>
+                <select class="form-select" id="activity">
+                    <option value="1.2">Sedentary: little or no exercise</option>
+                    <option value="1.375">Light: exercise 1-3 times/week</option>
+                    <option value="1.55" selected>Moderate: exercise 4-5 times/week</option>
+                    <option value="1.725">Active: daily exercise or intense exercise 3-4 times/week</option>
+                    <option value="1.9">Very Active: intense exercise 6-7 times/week</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="calculateCalories()">Calculate</button>
+            <div id="calorie-results" class="calorie-output mt-4" style="color:#555;">
+           
+            </div>
+        </form>
+
+        
+    </div>
+
+    <script>
+        function calculateCalories() {
+            const age = document.getElementById('age').value;
+            const genderLevel = document.getElementById('gender').value;
+            const height = document.getElementById('height').value;
+            const weight = document.getElementById('weight').value;
+            const activityLevel = document.getElementById('activity').value;
+
+            let calories;
+            if (gender === 'male') {
+                calories = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+            } 
+            else if(gender==='female') {
+                calories = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+            }
+            else{
+                calories = 400.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+            }
+
+            const maintenanceCalories = calories * activityLevel;
+            const mildLossCalories = maintenanceCalories * 0.9;
+            const weightLossCalories = maintenanceCalories * 0.8;
+            const extremeLossCalories = maintenanceCalories * 0.6;
+
+            document.getElementById('calorie-results').innerHTML = `
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="calorie-output">
+                            <strong>Maintain weight</strong><br>
+                            <span>${Math.round(maintenanceCalories)}</span> Calories/day
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="calorie-output">
+                            <strong>Mild weight loss</strong><br>
+                            <span>${Math.round(mildLossCalories)}</span> Calories/day
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="calorie-output">
+                            <strong>Weight loss</strong><br>
+                            <span>${Math.round(weightLossCalories)}</span> Calories/day
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="calorie-output">
+                            <strong>Extreme weight loss</strong><br>
+                            <span>${Math.round(extremeLossCalories)}</span> Calories/day
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+
+       
+
+      
+<section class="calorie-tracker">
+    <h2>Calorie Tracker</h2>
+    <div class="tracker-container">
+        <div class="tracker-bar">
+            <div class="tracker-fill"></div>
+        </div>
+        <div class="tracker-text">0 / 4000 cal</div>
+    </div>
+    <div class="input-container">
+        <input type="number" id="calorie-input" placeholder="Enter calories">
+        <button onclick="addCalories()">Add</button>
+    </div>
+</section>
+
+        
+    <script>
+        let totalCalories = 0;
+        const maxCalories = 4000;
+
+        function addCalories() {
+            const input = document.getElementById('calorie-input');
+            const calories = parseInt(input.value);
+            
+            if (isNaN(calories) || calories <= 0) {
+                alert('Please enter a valid number of calories.');
+                return;
+            }
+            
+            totalCalories += calories;
+            if (totalCalories > maxCalories) {
+                totalCalories = maxCalories;
+            }
+            
+            updateTracker();
+            input.value = '';
+        }
+
+        function updateTracker() {
+            const fillElement = document.querySelector('.tracker-fill');
+            const textElement = document.querySelector('.tracker-text');
+            
+            const percentage = (totalCalories / maxCalories) * 100;
+            fillElement.style.width = `${percentage}%`;
+            
+            textElement.textContent = `${totalCalories} / ${maxCalories} cal`;
+            
+            if (percentage >= 100) {
+                fillElement.style.backgroundColor = '#ff4444';
+            } else {
+                fillElement.style.backgroundColor = '#4CAF50';
+            }
+        }
+    </script>
+</body>
+</html>

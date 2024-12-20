@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let database = [
+                { username: "Bhumika", email: "bhumika.com", password: "1234", confirm: "1234" },
+                { username: "Dikshnat", email: "dikshant.com", password: "1234", confirm: "1234" },
+                { username: "Gurshan", email: "gurshan.com", password: "1234", confirm: "1234" },
+                { username: "Damandeep", email: "damandeep.com", password: "1234", confirm: "1234" }
+            ];
+
+            function isUserValid(username, email, password, confirm) {
+                for (let i = 0; i < database.length; i++) {
+                    if (database[i].username === username && database[i].email === email && 
+                        database[i].password === password && database[i].confirm === confirm) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            document.getElementById("loginButton").addEventListener("click", function() {
+                let username = document.getElementById("username").value;
+                let email = document.getElementById("email").value;
+                let password = document.getElementById("password").value;
+                let confirm = document.getElementById("confirm").value;
+
+                if (isUserValid(username, email, password, confirm)) {
+                    alert("Sign Up successful");
+                } else {
+                    alert("Invalid username, email, password, or confirm password");
+                }
+            });
+
+            // Animation
+            anime({
+                targets: '.container',
+                scale: [0.9, 1],
+                opacity: [0, 1],
+                easing: 'easeOutElastic(1, .8)',
+                duration: 1500
+            });
+
+            anime({
+                targets: 'input, button',
+                translateY: [20, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(100, {start: 500}),
+                easing: 'easeOutQuad'
+            });
+        });
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            background-image: url(greenery.jpg);
+            background-size: cover;
+            background-position: center;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            opacity: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background-color: #c1e769;
+            z-index: -1;
+        }
+
+        
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        input, button {
+            margin-bottom: 20px;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            opacity: 0;
+        }
+
+        input {
+            background-color: #ecf0f1;
+            transition: background-color 0.3s ease;
+        }
+
+        input:focus {
+            background-color: #e0e6e9;
+            outline: none;
+        }
+
+        button {
+            background-color: #59d64b;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background-color: #537acf;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+      <button class="back-button" onclick="history.back()">
+        <a href="index.html"> <i class="bi bi-arrow-left-circle-fill"></i> </a>
+     </button>
+        <h1>Sign Up</h1>
+        <form>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="contactNo">Contact No:</label>
+            <input type="tel" id="contactNo" name="contactNo" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirm">Confirm Password:</label>
+            <input type="password" id="confirm" name="confirm" required>
+
+            <button type="button" id="loginButton">Sign Up</button>
+        </form>
+    </div>
+</body>
+</html>

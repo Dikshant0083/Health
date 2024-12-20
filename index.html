@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Registration System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+         body {
+            background-image: url(greenery\ \(1\).jpg);
+            background-size: cover;
+            background-position: center;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .form-container {
+            background-color: #c1e769;
+            max-width: 400px;
+            transition: all 0.3s ease-in-out;
+        }
+        .form {
+            transition: all 0.3s ease-in-out;
+        }
+        .alert {
+            transition: all 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+        .alert.show {
+            max-height: 60px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="form-container bg-white p-8 rounded-lg shadow-md w-full">
+        <div class="mb-6 text-center">
+            <button id="loginToggle" class="px-4 py-2 font-semibold text-gray-700 bg-gray-200 rounded-l focus:outline-none">Login</button>
+            <button id="registerToggle" class="px-4 py-2 font-semibold text-gray-700 bg-gray-200 rounded-r focus:outline-none">Register</button>
+        </div>
+
+        <div id="alertBox" class="alert bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <span id="alertMessage" class="block sm:inline"></span>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="form">
+            <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+            <div class="mb-4">
+                <label for="loginEmail" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                <input type="email" id="loginEmail" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-6">
+                <label for="loginPassword" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                <input type="password" id="loginPassword" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Sign In
+                </button>
+            </div>
+        </form>
+
+        <!-- Registration Form -->
+        <form id="registerForm" class="form hidden">
+            <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
+            <div class="mb-4">
+                <label for="registerName" class="block text-gray-700 text-sm font-bold mb-2">Full Name</label>
+                <input type="text" id="registerName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-4">
+                <label for="registerEmail" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                <input type="email" id="registerEmail" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-4">
+                <label for="registerPassword" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                <input type="password" id="registerPassword" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-6">
+                <label for="registerConfirmPassword" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
+                <input type="password" id="registerConfirmPassword" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Register
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const loginToggle = document.getElementById('loginToggle');
+        const registerToggle = document.getElementById('registerToggle');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const alertBox = document.getElementById('alertBox');
+        const alertMessage = document.getElementById('alertMessage');
+
+        function showAlert(message, isError = true) {
+            alertMessage.textContent = message;
+            alertBox.classList.add('show');
+            alertBox.classList.toggle('bg-red-100', isError);
+            alertBox.classList.toggle('border-red-400', isError);
+            alertBox.classList.toggle('text-red-700', isError);
+            alertBox.classList.toggle('bg-green-100', !isError);
+            alertBox.classList.toggle('border-green-400', !isError);
+            alertBox.classList.toggle('text-green-700', !isError);
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 3000);
+        }
+
+        loginToggle.addEventListener('click', () => {
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+            loginToggle.classList.add('bg-white');
+            loginToggle.classList.remove('bg-gray-200');
+            registerToggle.classList.add('bg-gray-200');
+            registerToggle.classList.remove('bg-white');
+        });
+
+        registerToggle.addEventListener('click', () => {
+            loginForm.classList.add('hidden');
+            registerForm.classList.remove('hidden');
+            registerToggle.classList.add('bg-white');
+            registerToggle.classList.remove('bg-gray-200');
+            loginToggle.classList.add('bg-gray-200');
+            loginToggle.classList.remove('bg-white');
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                showAlert('Login successful!', false);
+                // Redirect to dashboard or home page
+                window.location.href = 'home.html';
+            } else {
+                showAlert('Invalid email or password. Please register if you are a new user.');
+            }
+        });
+
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match.');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.some(u => u.email === email)) {
+                showAlert('Email already registered.');
+                return;
+            }
+
+            users.push({ name, email, password });
+            localStorage.setItem('users', JSON.stringify(users));
+            showAlert('Registration successful! You can now log in.', false);
+            loginToggle.click(); // Switch to login form
+        });
+    </script>
+</body>
+</html>
